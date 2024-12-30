@@ -18,7 +18,7 @@ from owlready2 import *
 llm = LLM(
   api_key=os.getenv("GOOGLE_API_KEY"),
   model="gemini/gemini-pro",
-  temperature = 0.0                      # 0.0 - 1.0 para o modelo gemini/gemini-pro
+  temperature = 1.0                      # 0.0 - 1.0 para o modelo gemini/gemini-pro
 )
 
 
@@ -41,9 +41,9 @@ def read_pdf_tool(pdf: str) -> str:
 
 ############# AGENT1
 agent1 = Agent(
-    role="Um experiente analisador de dados",
-    goal="Analisa e interpreta complexos artigos científicos extraindo conceitos relevantes sobre o tema: {topic}.",
-    backstory="Com 10 anos de experiência em análise de dados e {topic}, você se destaca em encontrar os conceitos chaves de um texto.",
+    role="Um experiente extrator de conceitos",
+    goal="Analisa e interpreta complexos texto extraindo todos os conceitos relevantes sobre o tema: {topic}.",
+    backstory="Com 10 anos de experiência em análise de dados e {topic}, você se destaca em encontrar os conceitos de um texto.",
     llm=llm,
     tools=[read_pdf_tool],
     verbose=True,
@@ -52,14 +52,14 @@ agent1 = Agent(
 
 ############# TASK1
 task1 = Task(
-    description="Extrair vários conceitos relevantes sobre {topic} do arquivo {pdf} para análise subsequente.",
+    description="Extrair vários conceitos sobre {topic} do arquivo {pdf} para análise subsequente.",
     expected_output="""
     Uma relatório contento o título do artigo analisado e uma tabela com os conceitos e um parágrafo do texto original contendo o conceito relacionado.
     Utilize o exemplo abaixo para compor o relatório.
     Exemplo:
-    # Título do Artigo
+    # TÍTULO: "Título do Artigo"
     ## Tabela de Conceitos
-    | Conceito | Contexto |
+    | Conceito | Contexto onde o conceito foi encontrado |
     |-----------|----------|
     | "Conceito achado" | "Parágrafo do texto contendo o conceito" |
     """,
@@ -74,9 +74,9 @@ task1 = Task(
 # LEITOR DE ONTOLOGIA OWL
 @tool("Leitor de Ontologia OWL")
 def read_onto_tool(onto: str) -> str:
-    """Esta ferramenta lê um arquivo em OWL."""
+    """Esta ferramenta lê um arquivo em OWL retornando suas classes e descrições."""
     onto = get_ontology(onto).load()
-    response = "CLASSES DA ONTOLOGIA:\n"
+    response = "CLASSES DA ONTOLOGIA E SUAS DESCRIÇÕES:\n"
     for cls in onto.classes():
         response = response + cls.name + " - "
         if cls.comment:
@@ -93,8 +93,8 @@ def read_onto_tool(onto: str) -> str:
 ############# AGENT2
 agent2 = Agent(
     role="Um experiente analista de {topic} e pesquisador de ontologia",
-    goal="Consegue relacionar conceitos de uma lista entregue por outro agente com classes de uma ontologia extraídas do arquivo {onto}.",
-    backstory="Um pesquisador de {topic} com experiência em pesquisa científica e conhecimento em ontologia que consegue relacionar conceitos de uma tabela com classes de uma ontologia do arquivo {onto} com bastante atenção aos detalhes.",
+    goal="Relacionar conceitos de uma lista entregue por outro agente com classes de uma ontologia extraídas do arquivo {onto}. Comparando o conceito da lista e a descrição da classe.",
+    backstory="Um pesquisador de {topic} com experiência em relações ontológicas que consegue relacionar conceitos de uma lista forncecidas por outro agene e uma tabela com classes de uma ontologia do arquivo {onto} com bastante atenção aos detalhes.",
     llm=llm,
     tools=[read_onto_tool],
     verbose=True,
@@ -103,12 +103,12 @@ agent2 = Agent(
 
 ############# TASK2
 task2 = Task(
-    description="Relacionar conceitos entregues por outro agente com as classes de uma ontologia.",
+    description="Relacionar conceitos entregues por outro agente com as classes de uma ontologia do arquivo {onto}.",
     expected_output="""
     Um relatório formatado em markdown contendo: 
     o título do artigo que foi entregue pelo outro agente, 
-    uma tabela dos conceitos que forma possíveis de relacionar com as classes da ontologia e 
-    outra tabela com os conceitos que não foram possíveis de estabelecer um relacionamento, quando houverem.
+    uma tabela dos conceitos que forma possíveis de relacionar com as classes da ontologia em uma coluna e em outra coluna uma explicação do porquê o conceito é relacionado com a classe.
+    outra tabela com os conceitos restantes da lista, quando houverem, e que não foram possíveis de relacionar com as classes da ontologia.
     """,
     agent=agent2,
     output_file="report.md"

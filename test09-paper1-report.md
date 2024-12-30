@@ -13,7 +13,7 @@
 ## Table of Concepts Not Related to Ontology Classes
 
 | Concept |
-|---|---|
+|---|
 | ActiveData |
 | ActiveStakeholder |
 | Objective |

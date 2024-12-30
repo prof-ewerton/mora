@@ -121,7 +121,7 @@ crew = Crew(
     agents=[agent1, agent2],
     tasks=[task1, task2],
     process=Process.sequential,  # or Process.hierarchical
-    max_iter=4,
+    max_iter=10,
     full_output=True,
 )
 

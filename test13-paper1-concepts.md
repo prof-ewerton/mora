@@ -1,0 +1,8 @@
+# TÍTULO: "Gamiﬁcation and Learning Analytics to Improve Engagement in University Courses"
+## Tabela de Conceitos
+| Conceito | Contexto onde o conceito foi encontrado |
+|---|---|
+| Gamiﬁcation | "...Gamiﬁcation is one of the most used techniques to improve active participation and engagement in different kinds of contexts..." |
+| Aprendizagem Analítica | "...The use of game techniques is effective in pushing subjects to be involved in an activity. Since the early childhood, indeed, the promises of rewards are useful to affect speciﬁc behaviors. On the other hands, the learning analytics have been largely imple- mented in education in order to improve the assessment and the self-assessment of students, above all in e-learning settings..." |
+| Engajamento | "...The research presented in this work aims at combining gami ﬁ cation techniques and learning analytics to improve the engagement in University courses..." |
+| Aprendizagem Analítica | "...The MOOCs have been a big revolution in Education, since the university courses can be attended by all people that need to acquire speci ﬁc knowledge or competences without to necessary being physical in the site where the lesson is given. This means that even non-university students can access to high education without physical limi- tations. Moreover, these courses (and universities) release attending certi ﬁcates, once the course has been completed, and quali ﬁcation certi ﬁcates if the student successfully passes the related exam..." |

@@ -161,3 +161,7 @@ print(results)
 # Precisa ter um arquivo .env com a variável GOOGLE_API_KEY com a chave da API do Google.
 # Apenas os arquivos pdf 1,2,3 e 5 são sobre Learning Analytics.
 # python crewai-onto-research.py
+
+
+# Os testes de 01 até 17 foram com prompts em português.
+# O teste 18 é com prompt em inglês.

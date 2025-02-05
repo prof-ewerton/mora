@@ -10,15 +10,17 @@
 from crewai.tools import tool
 # from langchain_google_genai import ChatGoogleGenerativeAI
 from crewai import LLM, Agent, Task, Crew, Process
+from openai import OpenAI
 from pypdf import PdfReader
 from owlready2 import *
 
 ########## LLM
 # llm = ChatGoogleGenerativeAI(model="gemini/gemini-pro", temperature = 0)
-llm = LLM(
-  api_key=os.getenv("GOOGLE_API_KEY"),
-  model="gemini/gemini-pro",             # or "gemini/gemini-1.5-flash-latest"
-  temperature = 1.0                      # 0.0 - 1.0 para o modelo gemini/gemini-pro
+llm = LLM( 
+  base_url= "https://openrouter.ai/api/v1" ,
+  model= "openrouter/deepseek/deepseek-r1",
+  api_key= os.getenv("DEEPSEEK_API_KEY") ,
+  temperature = 1.0  
 )
 
 

@@ -10,7 +10,6 @@
 from crewai.tools import tool
 # from langchain_google_genai import ChatGoogleGenerativeAI
 from crewai import LLM, Agent, Task, Crew, Process
-from openai import OpenAI
 from pypdf import PdfReader
 from owlready2 import *
 
